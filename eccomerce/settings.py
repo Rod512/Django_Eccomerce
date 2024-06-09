@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'fontawesomefree',
     'category',
     'account',
+    'store'
 ]
 
 MIDDLEWARE = [
