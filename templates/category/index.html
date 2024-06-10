@@ -3,7 +3,6 @@
 {% block title %}Home{% endblock title %}
 
 {% block content %}
-	{% include "partials/_header.html" %}
 
 	<!-- ========================= SECTION MAIN ========================= -->
 	<section class="section-intro padding-y-sm">
@@ -31,7 +30,7 @@
 		{% for product in products %}
 			<div class="col-md-3">
 				<div class="card card-product-grid">
-					<a href="./product-detail.html" class="img-wrap"> <img src="{{product.image}}"> </a>
+					<a href="./product-detail.html" class="img-wrap"> <img src={{product.image.url}}> </a>
 					<figcaption class="info-wrap">
 						<a href="./product-detail.html" class="title">{{product.product_name}}</a>
 						<div class="price mt-1">${{product.price}}</div> <!-- price-wrap.// -->
@@ -44,6 +43,4 @@
 	</div><!-- container // -->
 	</section>
 	<!-- ========================= SECTION  END// ========================= -->
-	
-	{% include "partials/_footer.html" %}
 {% endblock content %}
