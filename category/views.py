@@ -1,4 +1,9 @@
 from django.shortcuts import render
+from store.models import Product
 
 def home(request):
-    return render(request, 'category/index.html')
+    products = Product.objects.all().filter(is_avilable = True)
+    context = {
+        'products' : products
+    }
+    return render(request, 'category/index.html',context)
