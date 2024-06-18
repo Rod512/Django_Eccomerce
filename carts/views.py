@@ -15,6 +15,10 @@ def _cart_id(request):
 
 
 def add_cart(request,product_id):
+    colour = request.GET["colour"]
+    size = request.GET["size"]
+    return HttpResponse(colour + ' ' + size)
+    exit()
     product = Product.objects.get(id=product_id)
     try:
         cart = Cart.objects.get(cart_id= _cart_id(request))
