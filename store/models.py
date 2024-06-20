@@ -42,9 +42,9 @@ class Variation(models.Model):
     creted_date = models.DateTimeField(auto_now=True)
 
     objects = VariationManager()
-
-    def __unicode__(self):
-        return self.product
+    
+    def __str__(self):
+        return self.variation_value
 
 
    
