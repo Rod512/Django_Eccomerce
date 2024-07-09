@@ -10,6 +10,7 @@ from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator 
 from django.core.mail import EmailMessage
+from django.http import HttpResponse
 
 
 
@@ -29,18 +30,19 @@ def register(request):
             user.save()
 
             current_site = get_current_site(request)
-            mail_subject = messages('please activate your account')
+            mail_subject = 'please activate your account'
             message = render_to_string('account/account_verification_email.html',{
                 'user' : user,
                 'domain' : current_site,
                 'uid' : urlsafe_base64_encode(force_bytes(user.pk)),
-                'token' : default_token_generator.make_token.make_token(user)
+                'token' : default_token_generator.make_token(user)
             })
             to_mail = email
             send_mail = EmailMessage(mail_subject, message, to=[to_mail])
             send_mail.send()
-            messages.success(request, 'registration successfull')
-            return redirect('register')
+            #messages.success(request, 'Thanks for registration, we sent a varification mail on your email.Please verify your account')
+            return redirect('/account/login/?command=verification&email='+email)
+
 
     else:
         form = RegistrationForm()
@@ -71,3 +73,18 @@ def user_logout(request):
     logout(request)
     messages.success(request, "You are successfully loged out")
     return redirect("login")
+
+def activate(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()
+        user = Account._default_manager.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, Account.DoesNotExist):
+        user = None
+    if user is not None and default_token_generator.check_token(user, token):
+        user.is_active = True
+        user.save()
+        messages.success(request, 'congratulations your account is activate')
+        return redirect('login')
+    else:
+        messages.warning(request, 'invalid activation link')
+        return redirect('register')
