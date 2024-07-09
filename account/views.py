@@ -11,10 +11,11 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator 
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
+from .decorators import unauthenticated_required
 
 
 
-
+@unauthenticated_required
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -51,6 +52,7 @@ def register(request):
     }
     return render(request, 'account/register.html',context)
 
+@unauthenticated_required
 def user_login(request):
     if request.method == "POST":
         email =  request.POST["email"]
