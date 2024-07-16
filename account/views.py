@@ -14,7 +14,7 @@ from django.core.mail import EmailMessage
 from django.http import HttpResponse
 from .decorators import unauthenticated_required
 from carts.views import _cart_id
-
+import requests
 
 
 @unauthenticated_required
@@ -102,7 +102,16 @@ def user_login(request):
                 pass
             login(request, user)
             messages.info(request, "You are successfully loged in")
-            return redirect("dashboard")
+            url = request.META.get('HTTP_REFERER')
+            try:
+                query = requests.utils.urlparse(url).query
+                # next=/cart/checkout/
+                params = dict(x.split("=") for x in query.split('&'))
+                if 'next' in params:
+                    nextPage = params['next']
+                    return redirect(nextPage)
+            except:
+                return redirect("dashboard")
         else:
             messages.warning(request, "Invalid login credentials")
             return redirect("login")
