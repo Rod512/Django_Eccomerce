@@ -96,7 +96,9 @@
                 <p class="text-center mb-3">
                     <img src="{% static 'images/misc/payments.png' %}" height="26">
                 </p>
-                <a href="{% url "checkout" %}" class="btn btn-primary btn-block"> Make Payment </a>
+                <div id="paypal-button-container">
+                     <!---- paypal button load ---->
+                </div>
             </div> <!-- card-body.// -->
             </div> <!-- card.// -->
     
@@ -109,5 +111,26 @@
     <!-- ========================= SECTION CONTENT END// ========================= -->
 
 
+    <script>
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '{{grand_total}}'
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    alert('Transaction completed by ' + details.payer.name.given_name);
+                    });
+                    }
+    }).render('#paypal-button-container');
+    </script>
+    
+
+    
 {% endblock content %}
 
