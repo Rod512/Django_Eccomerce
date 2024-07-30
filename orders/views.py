@@ -9,7 +9,7 @@ import json
 @csrf_exempt
 def payments(request):
     body = json.loads(request.body)
-    order = Order.objects.get(user=request.user, is_ordered = False, order_number = body['orderID'],)
+    order = Order.objects.get(user=request.user, is_ordered = False, order_number = body['orderID'])
      
     payment = Payment(
         user = request.user,
