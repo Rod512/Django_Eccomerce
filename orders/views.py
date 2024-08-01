@@ -1,10 +1,13 @@
 from django.shortcuts import render,redirect
 from django.views.decorators.csrf import csrf_exempt
 from carts.models import CartItem
+from store.models import Product
 from .forms import OrderForm
 from .models import Order, Payment, OrderProduct
 import datetime
 import json
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
 
 @csrf_exempt
 def payments(request):
@@ -34,18 +37,35 @@ def payments(request):
         orderproduct.quantity = item.quantity
         orderproduct.product_price = item.product.price
         orderproduct.ordered = True
-        orderproduct.save() 
+        orderproduct.save()
 
-
+        cart_item =  CartItem.objects.get(id=item.id)
+        product_variation = cart_item.variations.all()
+        orderproduct = OrderProduct.objects.get(id=orderproduct.id)
+        orderproduct.variations.set(product_variation)
+        orderproduct.save()
     #reduce the quantity of the sold product
+        product = Product.objects.get(id=item.product_id)
+        product.stock -= item.quantity
+        product.save()
+
 
     #clear cart
+    CartItem.objects.filter(user = request.user).delete()
 
     #send email to customer
+    mail_subject = 'Thank you for your order'
+    message = render_to_string('orders/order_recived_email.html',{
+        'user' : request.user,
+        'order' : order,
+    })
+    to_mail = request.user.email
+    send_mail = EmailMessage(mail_subject, message, to=[to_mail])
+    send_mail.send()
 
     #send order number and trans id back to send data method while json response
 
-    return render(request, 'order/payments.html')
+    return render(request, 'orders/payments.html')
 
 def place_order(request, total=0, quantity=0,):
     current_user = request.user
