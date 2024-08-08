@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'account',
     'store',
     'carts',
-    'orders'
+    'orders',
+    'fontawesome_5',
 ]
 
 MIDDLEWARE = [
