@@ -2,7 +2,8 @@ from django.db import models
 from category.models import Category
 from django.urls import reverse
 from account.models import Account
-from django.db.models import Avg
+from django.db.models import Avg, Count
+
 
 
 
@@ -30,6 +31,14 @@ class Product(models.Model):
         if reviews ['average'] is not None:
             avg = float(reviews['average'])
         return avg
+    
+    def countReview(self):
+        reviews = ReviewRating.objects.filter(product=self, status=True).aggregate(count=Count('id'))
+        count = 0
+        if reviews ['count'] is not None:
+            count = int(reviews['count'])
+        return count
+
     
 
 class VariationManager(models.Manager):

@@ -31,8 +31,9 @@
             <i class="fas fa-star{% if single_product.averageReview < 2.5 %}-alt{% elif single_product.averageReview >= 2.5 and single_product.averageReview < 3 %}-half-alt {% endif %}"></i>
             <i class="fas fa-star{% if single_product.averageReview < 3.5 %}-alt{% elif single_product.averageReview >= 3.5 and single_product.averageReview < 4 %}-half-alt {% endif %}"></i>
             <i class="fas fa-star{% if single_product.averageReview < 4.5 %}-alt{% elif single_product.averageReview >= 4.5 and single_product.averageReview < 5 %}-half-alt {% endif %}"></i>
-        </span>
+        </span><span>{{single_product.countReview}} reviews</span>
     </div>
+    
     
     <div class="mb-3"> 
         <var class="price h4">${{single_product.price}}</var> 
@@ -132,7 +133,8 @@
         <br>
 
         <header class="section-heading">
-            <h3>Customer Reviews </h3>  
+            <h3>Customer Reviews </h3>
+             
             <div class="rating-star">
                 <span>
                     <i class="fas fa-star{% if single_product.averageReview < 0.5 %}-alt{% elif single_product.averageReview >= 0.5 and single_product.averageReview < 1 %}-half-alt {% endif %}"></i>
@@ -140,6 +142,7 @@
                     <i class="fas fa-star{% if single_product.averageReview < 2.5 %}-alt{% elif single_product.averageReview >= 2.5 and single_product.averageReview < 3 %}-half-alt {% endif %}"></i>
                     <i class="fas fa-star{% if single_product.averageReview < 3.5 %}-alt{% elif single_product.averageReview >= 3.5 and single_product.averageReview < 4 %}-half-alt {% endif %}"></i>
                     <i class="fas fa-star{% if single_product.averageReview < 4.5 %}-alt{% elif single_product.averageReview >= 4.5 and single_product.averageReview < 5 %}-half-alt {% endif %}"></i>
+                    <span>{{single_product.countReview}} reviews</span>
                 </span>
             </div>
         </header>
