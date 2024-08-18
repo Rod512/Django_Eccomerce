@@ -13,62 +13,64 @@
                 <strong class="d-inline-block mr-3">Edit Your Profile</strong>
             </header>
             <div class="card-body">
+              <div class="text-right">
+                <img src="{{userprofile.profile_picture.url}}" alt="Proile picture" width="100">
+              </div>
                 <div class="row">
-
                     <div class="col-md-12">
-                       <form action="" method='POST'>
+                       <form action="{% url "edit_profile" %}" method='POST' enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="form-row">
                           <div class="form_group col-md-6">
                             <label for="">First Name</label>
-                            <input type="text" name="" class="form-control">
+                            {{user_form.first_name}}
                           </div>
 
                           <div class="form_group col-md-6">
                             <label for="">Last Name</label>
-                            <input type="text" name="" class="form-control">
+                            {{user_form.last_name}}
                           </div>
                         </div>
 
                         <div class="form-row">
                           <div class="form_group col-md-6">
                             <label for="">Phone Number</label>
-                            <input type="text" name="" class="form-control">
+                            {{user_form.phone_number}}
                           </div>
 
                           <div class="form_group col-md-6">
                             <label for="">Profile Picture</label>
-                            <input type="file" name="" class="form-control">
+                            {{profile_form.profile_picture}}
                           </div>
                         </div>
 
                         <div class="form_group">
                           <label for="">Address line 1</label>
-                          <input type="text" name="" class="form-control">
+                          {{profile_form.address_line_1}}
                         </div>
                         
                         <div class="form_group">
                           <label for="">Address line 2</label>
-                          <input type="text" name="" class="form-control">
+                          {{profile_form.address_line_2}}
                         </div>
 
                         <div class="form-row">
                           <div class="form_group col-md-4">
                             <label for="">City</label>
-                            <input type="text" name="" class="form-control">
+                            {{profile_form.city}}
                           </div>
 
                           <div class="form_group col-md-4">
                             <label for="">State</label>
-                            <input type="text" name="" class="form-control">
+                            {{profile_form.state}}
                           </div>
 
                           <div class="form_group col-md-4">
                             <label for="">Country</label>
-                            <input type="text" name="" class="form-control">
+                            {{profile_form.country}}
                           </div>
                         </div>
-                        <input type="button" value="save" class="btn btn-primary mt-3">
+                        <input type="submit" value="save" class="btn btn-primary mt-3">
                        </form>
                     </div>
 
