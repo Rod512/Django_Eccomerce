@@ -90,7 +90,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'eccomerce.wsgi.application'
 AUTH_USER_MODEL = 'account.Account'
 
-
+import dj_database_url
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -100,6 +100,10 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+DATABASES["default"] = dj_database_url.parse("postgresql://django_eccomerce_user:TkgAb3HhNX69NJR4McuUdsLr8qYYY7s7@dpg-cr3ojsij1k6c73dresu0-a.oregon-postgres.render.com/django_eccomerce")
+
+
 
 
 # Password validation
